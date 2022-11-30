@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Base_layout</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<header><h1>this is the base_layout header</h1></header>
+    <h1><a href="{% url 'home' %}"><img src="{% static 'logo.png' %}"></a> </h1>
+    <nav>
+        <ul>
+            {% if user.is_authenticated %}
+
+                <li>
+                    <form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                </li>
+                <li>
+                    <a href="{% url 'articles:create' %}" class="highlight">create article</a>
+                </li>
+            {% else %}
+                <li><a href="{% url 'accounts:login' %}">login</a></li>
+                <li><a href="{% url 'accounts:signup' %}">signup</a></li>
+
+            {% endif %}
+
+
+        </ul>
+
+    </nav>
+
+    <div class="wrapper">
+        {% block content %}
+
+
+        {% endblock %}
+    </div>
+<footer><h1>this is the base_layout footer</h1></footer>
+</body>
+</html>
